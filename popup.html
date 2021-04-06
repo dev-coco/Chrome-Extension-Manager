@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app="extension_manager" ng-csp>
+   <head>
+      <meta charset="utf-8">
+      <style>
+          body {
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+              font-size: 14px;
+              line-height: 1.42857143;
+              color: #333;
+              background-color: #fff
+          }
+          .ng-hide {
+              display: none !important;
+          }
+          html {
+              border: 0;
+          }
+          body {
+              background: #fff;
+              width: 425px;
+              height: 700px;
+              margin: 0 auto;
+              padding-left: 30px !important;
+          }
+          .table {
+              width: 400px !important;
+          }
+          h4 {
+              margin-top: 0;
+              display: inline-block;
+              margin-bottom: 0;
+          }
+          table {
+              background-color: transparent;
+          }
+          th {
+              text-align: left
+          }
+          .table {
+              width: 100%;
+              max-width: 100%;
+              margin-bottom: 20px;
+          }
+          .table>thead>tr>th,
+          .table>tbody>tr>td {
+              padding: 8px;
+              line-height: 1.42857143;
+          }
+          .table>tbody>tr>td {
+              border-top: 1px solid #ddd;
+          }
+          .table {
+              border-collapse: collapse!important;
+          }
+          .form-control {
+              display: block;
+              width: 360px;
+              height: 34px;
+              padding: 0px 20px;
+              font-size: 14px;
+              line-height: 1.42857143;
+              color: #555;
+              border-radius: 4px;
+          }
+          .button {
+              text-align: center;
+              border: 1px solid;
+              padding: .175rem .75rem;
+              border-radius: 5px;
+              color: #fff;
+          }
+          .green {
+              background-color: #198754;
+              border-color: #198754;
+          }
+          .red {
+              background-color: #dc3545;
+              border-color: #dc3545;
+          }
+          span {
+              display: inline-block;
+              vertical-align: middle;
+          }
+      </style>
+   </head>
+   <script src="angular.min.js"></script>
+   <script src="popup.js"></script>
+   <body  ng-controller="chrome_extension_manager">
+       <br>
+      <div>
+         <input id="extension_list" placeholder="搜索..." class="form-control" type="text" ng-model="extension_list.$">
+         <table ng-show="filtered.length" class="table">
+            <thead>
+               <tr >
+                  <th>名称</th>
+                  <th>开关</th>
+                  <th>卸载</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="extension in filtered = (extensions | filter:extension_list)">
+                  <td>
+                     <span style="content: url(&quot;{{extension.icons[extension.icons.length-1].url}}&quot;);width:23px;padding:0px 10px;"></span><span>{{extension.name}}</span>
+                  </td>
+                  <td>
+                     <a ng-click="switch(extension)">
+                        <h4 ng-show="extension.enabled" class="button green">开启</h4>
+                        <h4 ng-show="!extension.enabled" class="button red">关闭</h4>
+                     </a>
+                  </td>
+                  <td>
+                     <a ng-click="uninstall(extension)">
+                        <h4><img style="width:23px;" src="trash.png"></h4>
+                     </a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </body>
+</html>
